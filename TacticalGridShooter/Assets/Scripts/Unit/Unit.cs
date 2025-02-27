@@ -5,51 +5,49 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
 
-
-    [SerializeField] private float movementSpeed = 5.0f;
-    [SerializeField] private float rotationSpeed = 7.0f;
-    private Vector3 targetPosition;
-    private Animator unitAnimator;
-    private string Animation_IsWalking = "IsWalking";
+    private GridPosition gridPosition;
+    private MoveAction moveAction;
 
     private void Awake()
     {
-        targetPosition = transform.position;
-        unitAnimator = GetComponentInChildren<Animator>();
+        moveAction = GetComponent<MoveAction>();
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float stoppingDistance = 0.1f;
+        GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
 
-        if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
+        if(newGridPosition != gridPosition)
         {
-            Vector3 moveDirection = (targetPosition - transform.position).normalized;
+            LevelGrid.Instance.UnitMovedGridPosition(this,gridPosition,newGridPosition);
 
-            transform.position += moveDirection * Time.deltaTime * movementSpeed;
-
-            transform.forward = Vector3.Slerp(transform.forward, moveDirection, rotationSpeed * Time.deltaTime);
-
-            unitAnimator.SetBool(Animation_IsWalking, true);
-        }
-        else
-        {
-            unitAnimator.SetBool(Animation_IsWalking, false);
+            gridPosition = newGridPosition;
         }
 
        
-
     }
 
-    public void Move(Vector3 targetPosition)
+
+    public MoveAction GetMoveAction()
     {
-        this.targetPosition = targetPosition;
+
+        return moveAction; 
+    
     }
+
+    public GridPosition GetGridPosition()
+    { 
+        return gridPosition;    
+    }
+
+   
 }
