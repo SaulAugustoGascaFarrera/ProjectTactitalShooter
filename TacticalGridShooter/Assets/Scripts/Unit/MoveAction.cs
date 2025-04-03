@@ -46,55 +46,11 @@ public class MoveAction : MonoBehaviour
 
     public void Move(GridPosition gridPosition)
     {
-        this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        //this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
     }
 
 
-    public bool IsValidActionGridPosition(GridPosition gridPosition)
-    {
-        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
+   
 
-        return validGridPositionList.Contains(gridPosition);
-    }
-
-    public List<GridPosition> GetValidActionGridPositionList()
-    {
-        List<GridPosition> validGridPositionList = new List<GridPosition>();
-
-        GridPosition unitGridPosoition = unit.GetGridPosition();
-
-        for (int x=-maxMoveDistance;x<=maxMoveDistance;x++)
-        {
-            for(int z=-maxMoveDistance;z<=maxMoveDistance;z++)
-            {
-                GridPosition offsetGridPosition = new GridPosition(x,z);
-
-                GridPosition testGridPosition = unitGridPosoition + offsetGridPosition;
-
-
-                if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
-                {
-                    continue;
-                }
-
-                if (unitGridPosoition == testGridPosition)
-                {
-                    //same gridposition where the unit is already at
-                    continue;
-                }
-
-                if (LevelGrid.Instance.HasAnyUnitAtGridPosition(testGridPosition))
-                {
-                    //grid position is already occupied by another unit
-                    continue;
-                }
-
-                validGridPositionList.Add(testGridPosition);
-
-                //Debug.Log(testGridPosition);
-            }
-        }
-        
-        return validGridPositionList;
-    }
+    
 }
