@@ -42,11 +42,19 @@ public class MoveAction : MonoBehaviour
         {
             unitAnimator.SetBool(Animation_IsWalking, false);
         }
+
+        GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.Instance.GetMousePosition());
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            Move(mouseGridPosition);
+        }
+
     }
 
     public void Move(GridPosition gridPosition)
     {
-        //this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
     }
 
 

@@ -16,6 +16,7 @@ public class GridObject
         unitList = new List<Unit>();
     }
 
+
     public void AddUnit(Unit unit)
     {
         unitList.Add(unit);
@@ -23,8 +24,9 @@ public class GridObject
 
     public void RemoveUnit(Unit unit)
     {
-        unitList.Remove(unit);  
+        unitList.Remove(unit);
     }
+
 
     public List<Unit> GetUnitList()
     {
@@ -36,20 +38,24 @@ public class GridObject
         return unitList.Count > 0;
     }
 
+
     public override string ToString()
     {
-        string unitString = "";
+
+        string playerString = "";
 
         if(HasAnyUnit())
         {
-            foreach (Unit unit in unitList)
+            foreach(Unit unit in unitList)
             {
-                unitString += unit + "\n";
+                playerString += unit + "\n";
             }
+
+            return gridPosition.ToString() + "\n" + playerString;
         }
 
-
-        return gridPosition.ToString() + "\n" + unitString;
+        return gridPosition.ToString(); 
     }
+
 
 }
